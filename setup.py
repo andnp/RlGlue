@@ -7,7 +7,7 @@ setup(
     author_email='andnpatterson@gmail.com',
     packages=find_packages(exclude=['tests*']),
     install_requires=[],
-    version=0.1,
+    version=0.2,
     license='MIT',
     description='A tiny re-implementation of the rl-glue interface',
     long_description='todo',

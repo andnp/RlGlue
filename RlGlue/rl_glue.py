@@ -10,23 +10,25 @@ class RlGlue:
 
     def start(self):
         s = self.environment.start()
-        self.last_action = self.agent.start(s)
+        obs = self.observationChannel(s)
+        self.last_action = self.agent.start(obs)
 
-        return (s, self.last_action)
+        return (obs, self.last_action)
 
     def step(self):
         (reward, s, term) = self.environment.step(self.last_action)
+        obs = self.observationChannel(s)
 
         self.total_reward += reward
 
         if term:
             self.num_episodes += 1
             self.agent.end(reward)
-            roat = (reward, s, None, term)
+            roat = (reward, obs, None, term)
         else:
             self.num_steps += 1
-            self.last_action = self.agent.step(reward, s)
-            roat = (reward, s, self.last_action, term)
+            self.last_action = self.agent.step(reward, obs)
+            roat = (reward, obs, self.last_action, term)
 
         self.recordTrajectory(roat[1], roat[2], roat[0], roat[3])
         return roat
@@ -41,6 +43,9 @@ class RlGlue:
             is_terminal = rl_step_result[3]
 
         return is_terminal
+
+    def observationChannel(self, s):
+        return s
 
     def recordTrajectory(self, s, a, r, t):
         pass

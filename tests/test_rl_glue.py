@@ -34,6 +34,9 @@ class TestAgent(BaseAgent):
         if s is None:
             raise Exception('Expected a state')
 
+        self.last_reward = r
+        self.last_observation = s
+
         return np.random.choice([-1, 0, 1])
 
     def end(self, r):
@@ -75,3 +78,18 @@ class TestInterface(unittest.TestCase):
         self.assertIn(exp.num_steps, range(100))
         self.assertEqual(exp.total_reward, 1)
         self.assertEqual(exp.num_episodes, 1)
+
+    def test_observationChannel(self):
+        env = MarkovChain({ 'size': 5 })
+        agent = TestAgent()
+        exp = RlGlue(agent, env)
+        exp.observationChannel = lambda s: s + 1
+
+        exp.start()
+        r, o, a, t = exp.step()
+
+        state = env.state
+        obs = agent.last_observation
+
+        self.assertEqual(state, obs - 1)
+        self.assertEqual(obs, o)

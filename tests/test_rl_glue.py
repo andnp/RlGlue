@@ -93,3 +93,16 @@ class TestInterface(unittest.TestCase):
 
         self.assertEqual(state, obs - 1)
         self.assertEqual(obs, o)
+
+    def test_manyRuns(self):
+        env = MarkovChain({ 'size': 5 })
+        agent = TestAgent()
+        exp = RlGlue(agent, env)
+
+        for run in range(10):
+            exp.start()
+
+            self.assertEqual(exp.total_reward, 0)
+            self.assertEqual(exp.num_steps, 0)
+
+            exp.runEpisode(100)

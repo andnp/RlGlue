@@ -9,6 +9,9 @@ class RlGlue:
         self.num_episodes = 0
 
     def start(self):
+        self.num_steps = 0
+        self.total_reward = 0
+
         s = self.environment.start()
         obs = self.observationChannel(s)
         self.last_action = self.agent.start(obs)

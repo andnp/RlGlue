@@ -18,7 +18,7 @@ class RlGlue:
 
         return (obs, self.last_action)
 
-    def step(self):
+    def step(self, update = True):
         (reward, s, term) = self.environment.step(self.last_action)
         obs = self.observationChannel(s)
 
@@ -30,7 +30,7 @@ class RlGlue:
             roat = (reward, obs, None, term)
         else:
             self.num_steps += 1
-            self.last_action = self.agent.step(reward, obs)
+            self.last_action = self.agent.step(reward, obs, update = update)
             roat = (reward, obs, self.last_action, term)
 
         self.recordTrajectory(roat[1], roat[2], roat[0], roat[3])

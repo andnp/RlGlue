@@ -1,9 +1,16 @@
+from abc import abstractmethod
+from typing import Any
+
+
 class BaseAgent:
-    def start(self, observation):
+    @abstractmethod
+    def start(self, observation: Any) -> int:
         raise NotImplementedError('Expected `start` to be implemented')
 
-    def step(self, reward, observation):
+    @abstractmethod
+    def step(self, reward: float, observation: Any) -> int:
         raise NotImplementedError('Expected `step` to be implemented')
 
-    def end(self, reward):
+    @abstractmethod
+    def end(self, reward: float) -> None:
         raise NotImplementedError('Expected `end` to be implemented')

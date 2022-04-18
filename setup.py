@@ -1,14 +1,20 @@
 from setuptools import setup, find_packages
 
+with open("README.md", "r") as f:
+    long_description = f.read()
+
 setup(
-    name='RlGlue',
+    name='RlGlue-andnp',
     url='https://github.com/andnp/RlGlue.git',
     author='Andy Patterson',
     author_email='andnpatterson@gmail.com',
     packages=find_packages(exclude=['tests*']),
-    install_requires=[],
-    version=0.4,
+    version='0.0.4',
     license='MIT',
     description='A tiny re-implementation of the rl-glue interface',
-    long_description='todo',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    python_requires=">=3.6",
+    install_requires=[],
+    extras_require={},
 )

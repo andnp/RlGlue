@@ -78,21 +78,6 @@ class TestInterface(unittest.TestCase):
         self.assertEqual(exp.total_reward, 1)
         self.assertEqual(exp.num_episodes, 1)
 
-    def test_observationChannel(self):
-        env = MarkovChain({ 'size': 5 })
-        agent = TestAgent()
-        exp = RlGlue(agent, env)
-        exp.observationChannel = lambda s: s + 1
-
-        exp.start()
-        r, o, a, t = exp.step()
-
-        state = env.state
-        obs = agent.last_observation
-
-        self.assertEqual(state, obs - 1)
-        self.assertEqual(obs, o)
-
     def test_manyRuns(self):
         env = MarkovChain({ 'size': 5 })
         agent = TestAgent()

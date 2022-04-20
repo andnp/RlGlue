@@ -4,15 +4,15 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-    name='RlGlue-andnp',
-    url='https://github.com/andnp/RlGlue.git',
-    author='Andy Patterson',
-    author_email='andnpatterson@gmail.com',
-    packages=find_packages(exclude=['tests*']),
+    name="RlGlue-andnp",
+    url="https://github.com/andnp/RlGlue.git",
+    author="Andy Patterson",
+    author_email="andnpatterson@gmail.com",
+    packages=find_packages(exclude=["tests*"]),
     package_data={"RlGlue": ["py.typed"]},
-    version='0.0.5',
-    license='MIT',
-    description='A tiny re-implementation of the rl-glue interface',
+    version="0.0.6",
+    license="MIT",
+    description="A tiny re-implementation of the rl-glue interface",
     long_description=long_description,
     long_description_content_type="text/markdown",
     python_requires=">=3.6",

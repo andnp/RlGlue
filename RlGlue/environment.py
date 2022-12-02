@@ -1,5 +1,5 @@
 from abc import abstractmethod
-from typing import Any, Tuple
+from typing import Any, Dict, Tuple
 
 
 class BaseEnvironment:
@@ -8,5 +8,5 @@ class BaseEnvironment:
         raise NotImplementedError('Expected `start` to be implemented')
 
     @abstractmethod
-    def step(self, action: int) -> Tuple[float, Any, bool]:
+    def step(self, action: int) -> Tuple[float, Any, bool, Dict[str, Any]]:
         raise NotImplementedError('Expected `step` to be implemented')

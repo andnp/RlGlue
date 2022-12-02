@@ -1,3 +1,4 @@
+from typing import Any, Dict, Tuple, Union
 from RlGlue.agent import BaseAgent
 from RlGlue.environment import BaseEnvironment
 
@@ -22,8 +23,8 @@ class RlGlue:
 
         return (s, self.last_action)
 
-    def step(self):
-        (reward, s, term) = self.environment.step(self.last_action)
+    def step(self) -> Tuple[float, Any, Union[int, None], bool, Dict[str, Any]]:
+        (reward, s, term, extra) = self.environment.step(self.last_action)
 
         self.total_reward += reward
 
@@ -32,10 +33,10 @@ class RlGlue:
         if term:
             self.num_episodes += 1
             self.agent.end(reward)
-            rsat = (reward, s, None, term)
+            rsat = (reward, s, None, term, extra)
         else:
             self.last_action = self.agent.step(reward, s)
-            rsat = (reward, s, self.last_action, term)
+            rsat = (reward, s, self.last_action, term, extra)
 
         return rsat
 

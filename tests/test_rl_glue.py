@@ -21,7 +21,7 @@ class MarkovChain(BaseEnvironment):
         r = 1 if self.state == 0 else 0
         done = self.state == 0
 
-        return (r, self.state, done)
+        return (r, self.state, done, {})
 
 class TestAgent(BaseAgent):
     def start(self, s):
@@ -59,12 +59,12 @@ class TestInterface(unittest.TestCase):
         exp = RlGlue(agent, env)
 
         exp.start()
-        (r, s, a, t) = exp.step()
+        interaction = exp.step()
 
-        self.assertIn(r, [0, 1])
-        self.assertIn(s, range(5))
-        self.assertIn(a, [-1, 0, 1])
-        self.assertIn(t, [True, False])
+        self.assertIn(interaction.r, [0, 1])
+        self.assertIn(interaction.o, range(5))
+        self.assertIn(interaction.a, [-1, 0, 1])
+        self.assertIn(interaction.t, [True, False])
 
     def test_runEpisode(self):
         env = MarkovChain({ 'size': 5 })

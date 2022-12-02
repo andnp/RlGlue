@@ -1,6 +1,16 @@
-from typing import Any, Dict, Tuple, Union
+from dataclasses import dataclass
+from typing import Any, Dict, Union
 from RlGlue.agent import BaseAgent
 from RlGlue.environment import BaseEnvironment
+
+
+@dataclass
+class Interaction:
+    o: Any
+    a: Union[int, None]
+    t: bool
+    r: float
+    extra: Dict[str, Any]
 
 
 class RlGlue:
@@ -23,7 +33,7 @@ class RlGlue:
 
         return (s, self.last_action)
 
-    def step(self) -> Tuple[float, Any, Union[int, None], bool, Dict[str, Any]]:
+    def step(self) -> Interaction:
         (reward, s, term, extra) = self.environment.step(self.last_action)
 
         self.total_reward += reward
@@ -33,12 +43,14 @@ class RlGlue:
         if term:
             self.num_episodes += 1
             self.agent.end(reward)
-            rsat = (reward, s, None, term, extra)
-        else:
-            self.last_action = self.agent.step(reward, s)
-            rsat = (reward, s, self.last_action, term, extra)
+            return Interaction(
+                o=s, a=None, t=term, r=reward, extra=extra,
+            )
 
-        return rsat
+        self.last_action = self.agent.step(reward, s)
+        return Interaction(
+            o=s, a=self.last_action, t=term, r=reward, extra=extra,
+        )
 
     def runEpisode(self, max_steps: int = 0):
         is_terminal = False
@@ -47,7 +59,7 @@ class RlGlue:
 
         while (not is_terminal) and ((max_steps == 0) or (self.num_steps < max_steps)):
             rl_step_result = self.step()
-            is_terminal = rl_step_result[3]
+            is_terminal = rl_step_result.t
 
         # even at episode cutoff, this still counts as completing an episode
         if not is_terminal:

@@ -10,7 +10,7 @@ setup(
     author_email="andnpatterson@gmail.com",
     packages=find_packages(exclude=["tests*"]),
     package_data={"RlGlue": ["py.typed"]},
-    version="0.0.6",
+    version="1.0.0",
     license="MIT",
     description="A tiny re-implementation of the rl-glue interface",
     long_description=long_description,

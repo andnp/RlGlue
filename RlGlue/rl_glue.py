@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Dict, Union
+from typing import Any, Dict, Optional, Union
 from RlGlue.agent import BaseAgent
 from RlGlue.environment import BaseEnvironment
 
@@ -18,7 +18,7 @@ class RlGlue:
         self.environment = env
         self.agent = agent
 
-        self.last_action: int = -1
+        self.last_action: Optional[int] = None
         self.total_reward: float = 0.0
         self.num_steps: int = 0
         self.total_steps: int = 0
@@ -34,6 +34,7 @@ class RlGlue:
         return (s, self.last_action)
 
     def step(self) -> Interaction:
+        assert self.last_action is not None, 'Action is None; make sure to call glue.start() before calling glue.step().'
         (reward, s, term, extra) = self.environment.step(self.last_action)
 
         self.total_reward += reward

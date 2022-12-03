@@ -43,12 +43,12 @@ class RlGlue:
         self.total_steps += 1
         if term:
             self.num_episodes += 1
-            self.agent.end(reward)
+            self.agent.end(reward, extra)
             return Interaction(
                 o=s, a=None, t=term, r=reward, extra=extra,
             )
 
-        self.last_action = self.agent.step(reward, s)
+        self.last_action = self.agent.step(reward, s, extra)
         return Interaction(
             o=s, a=self.last_action, t=term, r=reward, extra=extra,
         )

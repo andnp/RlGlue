@@ -27,7 +27,7 @@ class TestAgent(BaseAgent):
     def start(self, s):
         return np.random.choice([-1, 0, 1])
 
-    def step(self, r, s):
+    def step(self, r, s, extra):
         if r is None:
             raise Exception('Expected a reward')
         if s is None:
@@ -38,7 +38,7 @@ class TestAgent(BaseAgent):
 
         return np.random.choice([-1, 0, 1])
 
-    def end(self, r):
+    def end(self, r, extra):
         if r is None:
             raise Exception('Expected a reward')
 

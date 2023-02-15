@@ -9,7 +9,7 @@ git config user.name "github-action"
 
 git fetch --all --tags
 
-git checkout -f main
+git checkout -f master
 
 # bump the version
 cz bump --no-verify --yes --check-consistency

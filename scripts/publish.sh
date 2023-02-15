@@ -9,17 +9,13 @@ git config user.name "github-action"
 
 git fetch --all --tags
 
-git checkout -f master
-
-# sync package dependencies
-pipenv-setup sync --dev --pipfile
+git checkout -f main
 
 # bump the version
 cz bump --no-verify --yes --check-consistency
 
 # push to pypi repository
-python -m build
-
+pdm build
 python -m twine upload -u __token__ -p ${PYPI_TOKEN} --non-interactive dist/*
 
 git push

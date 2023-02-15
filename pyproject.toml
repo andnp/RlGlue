@@ -3,7 +3,7 @@
 name = "cz_conventional_commits"
 version = "1.0.0"
 tag_format = "$version"
-version_files = ["setup.py"]
+version_files = ["pyproject.toml"]
 
 [tool.pdm]
 [tool.pdm.dev-dependencies]

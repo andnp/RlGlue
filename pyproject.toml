@@ -28,7 +28,7 @@ dev = [
     "commitizen",
     "flake8",
     "mypy",
-    "numpy>=1.19.5",
+    "numpy>=1.24.2",
     "pipenv-setup[black]",
     "pre-commit",
     "twine",

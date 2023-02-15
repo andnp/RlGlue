@@ -21,7 +21,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
 
     - name: Install dependencies
-      run: pdm install
+      run: pdm install --dev
 
     - name: Test
       env:

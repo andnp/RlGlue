@@ -6,6 +6,15 @@ tag_format = "$version"
 version_files = ["setup.py"]
 
 [tool.pdm]
+[tool.pdm.dev-dependencies]
+dev = [
+    "mypy",
+    "flake8",
+    "commitizen",
+    "pre-commit",
+    "twine",
+    "numpy>=1.24.2",
+]
 
 [project]
 name = "RlGlue-andnp"
@@ -21,18 +30,6 @@ license = {text = "MIT"}
 
 [project.urls]
 Homepage = "https://github.com/andnp/RlGlue.git"
-
-[project.optional-dependencies]
-dev = [
-    "build",
-    "commitizen",
-    "flake8",
-    "mypy",
-    "numpy>=1.24.2",
-    "pipenv-setup[black]",
-    "pre-commit",
-    "twine",
-]
 
 [build-system]
 requires = ["pdm-pep517>=1.0.0"]

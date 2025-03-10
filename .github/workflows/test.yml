@@ -14,16 +14,23 @@ jobs:
         python-version: ["3.10", "3.11", "3.12"]
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up PDM
-      uses: pdm-project/setup-pdm@v3
-      with:
-        python-version: ${{ matrix.python-version }}
+      # setup the repository
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
 
-    - name: Install dependencies
-      run: pdm install --dev
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
 
-    - name: Test
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: pdm run ./scripts/run_tests.sh
+      - run: |
+          uv venv
+          uv sync --group=dev
+
+      - run: echo "$PWD/.venv/bin" >> $GITHUB_PATH
+
+      # linting
+      - uses: chartboost/ruff-action@v1
+
+      # type checking
+      - uses: jakebailey/pyright-action@v2
+        with:
+          pylance-version: latest-release

@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any
-from RlGlue.agent import BaseAgent
-from RlGlue.environment import BaseEnvironment
+from rlglue.agent import BaseAgent
+from rlglue.environment import BaseEnvironment
 
 
 @dataclass

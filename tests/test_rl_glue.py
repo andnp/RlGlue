@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from RlGlue import RlGlue, BaseEnvironment, BaseAgent
+from rlglue import RlGlue, BaseEnvironment, BaseAgent
 
 class MarkovChain(BaseEnvironment):
     def __init__(self, params):

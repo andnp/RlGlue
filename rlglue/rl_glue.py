@@ -1,16 +1,17 @@
 from dataclasses import dataclass
-from typing import Any, Dict, Optional, Union
-from RlGlue.agent import BaseAgent
-from RlGlue.environment import BaseEnvironment
+from typing import Any
+from rlglue.agent import BaseAgent
+from rlglue.environment import BaseEnvironment
 
 
 @dataclass
 class Interaction:
-    o: Any
-    a: Union[int, None]
-    t: bool
-    r: float
-    extra: Dict[str, Any]
+    obs: Any
+    action: int | None
+    term: bool
+    trunc: bool
+    reward: float
+    extra: dict[str, Any]
 
 
 class RlGlue:
@@ -18,7 +19,7 @@ class RlGlue:
         self.environment = env
         self.agent = agent
 
-        self.last_action: Optional[int] = None
+        self.last_action: int | None = None
         self.total_reward: float = 0.0
         self.num_steps: int = 0
         self.total_steps: int = 0
@@ -35,7 +36,7 @@ class RlGlue:
 
     def step(self) -> Interaction:
         assert self.last_action is not None, 'Action is None; make sure to call glue.start() before calling glue.step().'
-        (reward, s, term, extra) = self.environment.step(self.last_action)
+        (reward, s, term, trunc, extra) = self.environment.step(self.last_action)
 
         self.total_reward += reward
 
@@ -45,12 +46,22 @@ class RlGlue:
             self.num_episodes += 1
             self.agent.end(reward, extra)
             return Interaction(
-                o=s, a=None, t=term, r=reward, extra=extra,
+                obs=s,
+                action=None,
+                term=term,
+                trunc=trunc,
+                reward=reward,
+                extra=extra,
             )
 
         self.last_action = self.agent.step(reward, s, extra)
         return Interaction(
-            o=s, a=self.last_action, t=term, r=reward, extra=extra,
+            obs=s,
+            action=self.last_action,
+            term=term,
+            trunc=trunc,
+            reward=reward,
+            extra=extra,
         )
 
     def runEpisode(self, max_steps: int = 0):
@@ -60,7 +71,7 @@ class RlGlue:
 
         while (not is_terminal) and ((max_steps == 0) or (self.num_steps < max_steps)):
             rl_step_result = self.step()
-            is_terminal = rl_step_result.t
+            is_terminal = rl_step_result.term
 
         # even at episode cutoff, this still counts as completing an episode
         if not is_terminal:

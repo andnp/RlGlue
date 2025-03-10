@@ -1,7 +1,7 @@
 [tool]
 [tool.commitizen]
 name = "cz_conventional_commits"
-version = "1.1.0"
+version = "2.0.0"
 tag_format = "$version"
 version_files = ["pyproject.toml"]
 
@@ -23,7 +23,7 @@ packages = ["rlglue"]
 
 [project]
 name = "RlGlue-andnp"
-version = "1.1.0"
+version = "2.0.0"
 description = "A tiny re-implementation of the rl-glue interface"
 authors = [
     {name = "Andy Patterson", email = "andnpatterson@gmail.com"},

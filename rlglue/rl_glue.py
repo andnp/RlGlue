@@ -36,7 +36,7 @@ class RlGlue:
 
     def step(self) -> Interaction:
         assert self.last_action is not None, 'Action is None; make sure to call glue.start() before calling glue.step().'
-        (reward, s, term, trunc, extra) = self.environment.step(self.last_action)
+        (s, reward, term, trunc, extra) = self.environment.step(self.last_action)
 
         self.total_reward += reward
 
